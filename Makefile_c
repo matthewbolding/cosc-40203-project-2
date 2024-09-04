@@ -1,0 +1,37 @@
+###########################################################
+#
+# Simple Makefile for Operating Systems Project
+# hfsh
+#
+# (C Version)
+#
+###########################################################
+.SUFFIXES: .h .c .l .o
+
+CC = gcc
+CFLAGS = -g
+LEX = flex
+LIBS = -ll
+RM = /bin/rm
+RMFLAGS = -f
+
+EXE = hfsh
+OBJS = hfsh.o lex.yy.o
+
+$(EXE): $(OBJS)
+	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
+
+hfsh.o: hfsh.c
+	$(CC) $(CFLAGS) -c $<
+
+lex.yy.o: lex.yy.c
+	$(CC) $(CFLAGS) -c $<
+
+lex.yy.c: scan.l
+	$(LEX) $<
+
+clean:
+	$(RM) $(RMFLAGS) *.o *~ hfsh lex.yy.c
+
+
+

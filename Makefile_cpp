@@ -1,0 +1,36 @@
+###########################################################
+#
+# Simple Makefile for Operating Systems Project
+# hfsh
+#
+# (C++ Version)
+#
+###########################################################
+.SUFFIXES: .h .c .cpp .l .o
+
+CC = gcc
+CXX = g++
+CFLAGS = -g
+CXXFLAGS = -g
+LEX = flex
+LIBS = -lfl
+RM = /bin/rm
+RMFLAGS = -f
+
+EXE = hfsh
+OBJS = hfsh.o lex.yy.o
+
+$(EXE): $(OBJS)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LIBS)
+
+hfsh.o: hfsh.cpp
+	 $(CXX) $(CXXFLAGS) -c $<
+
+lex.yy.o: lex.yy.c
+	$(CC) $(CFLAGS) -c $<
+
+lex.yy.c: scan.l
+	$(LEX) $<
+
+clean:
+	$(RM) $(RMFLAGS) *.o *~ hfsh lex.yy.c
